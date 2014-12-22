@@ -1,0 +1,16 @@
+#! /bin/bash
+# If STDIN matches a specified pattern, execute a command.
+
+if [ ! -n "$1" ]; then
+    echo "Usage: SOMETHING-OUTPUTTING-TO-STDOUT | matches pattern command"
+    exit 1
+fi
+
+pattern=$1
+command=$2
+
+while read output; do
+    if grep -q $pattern <(echo $output) ; then
+        eval "$command"
+    fi
+done
